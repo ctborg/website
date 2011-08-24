@@ -10,9 +10,9 @@ db.people.find({ $or : [ { 'twit.screenName' : { $exists : true } } , { 'github.
     slug = p._id;
   } else {
     slugs[slug] = [p._id];
+    db.people.update({_id: p._id}, {$set: {slug: slug}});
+    print(slug, '<-', p.name);
   }
-  print(slug, '<-', p.name);
-  db.people.update({_id: p._id}, {$set: {slug: slug}});
 });
 
 print('--- dupes ---');
