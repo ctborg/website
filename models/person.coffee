@@ -90,6 +90,8 @@ PersonSchema.plugin auth,
                 promise.fulfill updatedUser
         promise
 
+# instance methods
+PersonSchema.method 'toString', -> @slug or @id
 ROLES.forEach (t) ->
   PersonSchema.virtual(t).get -> @role == t
 PersonSchema.virtual('login').get ->
@@ -97,7 +99,9 @@ PersonSchema.virtual('login').get ->
 PersonSchema.virtual('githubLogin').get -> @github?.login
 # twitterScreenName isn't here because you can edit it
 
-PersonSchema.method 'toString', -> @slug or @id
+# class methods
+PersonSchema.static 'findBySlug', (slug, rest...) ->
+  Person.findOne { slug: slug }, rest...
 
 # associations
 PersonSchema.method 'team', (next) ->
