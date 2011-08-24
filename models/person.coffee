@@ -97,6 +97,8 @@ PersonSchema.virtual('login').get ->
 PersonSchema.virtual('githubLogin').get -> @github?.login
 # twitterScreenName isn't here because you can edit it
 
+PersonSchema.method 'toString', -> @slug or @id
+
 # associations
 PersonSchema.method 'team', (next) ->
   Team = mongoose.model 'Team'
